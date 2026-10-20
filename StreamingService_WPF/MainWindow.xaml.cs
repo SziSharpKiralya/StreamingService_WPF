@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace StreamingService_WPF
 {
@@ -17,14 +18,33 @@ namespace StreamingService_WPF
         {
             InitializeComponent();
 
+            string path = "contents.txt";
+
             StreamingPlatform platform = new StreamingPlatform();
 
-            platform.AddContent(new Movie(new Video("Interstellar", 169)));
-            platform.AddContent(new Movie(new Video("Inception", 148)));
-            platform.AddContent(new Series("Stranger Things", [
-                new Video("Első rész", 31),
-                new Video("Második rész", 27)
-            ]));
+            foreach (string line in File.ReadAllLines(path))
+            {
+                string[] parts = line.Split('|');
+
+                if (parts[0] == "Movie")
+                {
+                    platform.AddContent(
+                        new Movie(new Video(parts[1], int.Parse(parts[2])))
+                    );
+                }
+                else if (parts[0] == "Series")
+                {
+                    var videos = parts[2].Split(';')
+                        .Select(v =>
+                        {
+                            string[] data = v.Split(':');
+                            return new Video(data[0], int.Parse(data[1]));
+                        })
+                        .ToList();
+
+                    platform.AddContent(new Series(parts[1], videos));
+                }
+            }
 
             contentDataGrid.ItemsSource = platform.GetContent().Select(content => new
             {
