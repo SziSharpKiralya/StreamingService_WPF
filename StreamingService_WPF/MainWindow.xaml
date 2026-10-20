@@ -46,7 +46,7 @@
                 </Grid>
             </Border>
 
-            <DataGrid x:Name="ContentDataGrid"
+            <DataGrid x:Name="contentDataGrid"
                   Grid.Row="1"
                   Margin="12"
                   AutoGenerateColumns="False"
