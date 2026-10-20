@@ -5,8 +5,78 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StreamingService_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        ResizeMode="NoResize"
+		WindowStyle="None"
+		Background="Transparent"
+        Title="MainWindow" 
+        Height="450" 
+        Width="800">
 
-    </Grid>
+    <Border Background="RosyBrown"
+        CornerRadius="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Border x:Name="titlebar"
+                MouseLeftButtonDown="console_MouseLeftButtonDown"
+                Grid.Row="0"
+                Background="Cornsilk"
+                CornerRadius="20,20,0,0">
+                <Grid>
+                    <TextBlock Text="📽 Streaming Service"
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           Foreground="RosyBrown"/>
+
+                    <Button Content="X"
+                        Width="36"
+                        Height="24"
+                        Margin="0,0,20,0"
+                        Background="#FFB02E2E"
+                        Foreground="White"
+                        BorderThickness="0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Click="btnClose_Click"/>
+                </Grid>
+            </Border>
+
+            <DataGrid x:Name="ContentDataGrid"
+                  Grid.Row="1"
+                  Margin="12"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  CanUserAddRows="False"
+                  CanUserResizeRows="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  Background="Cornsilk"
+                  Foreground="RosyBrown"
+                  BorderThickness="0"
+                  RowBackground="#FFFFF8E7"
+                  AlternatingRowBackground="#FFF2E2C8"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Cím"
+                                    Binding="{Binding Title}"
+                                    Width="*"/>
+
+                    <DataGridTextColumn Header="Típus"
+                                    Binding="{Binding Type}"
+                                    Width="0.3*"/>
+
+                    <DataGridTextColumn Header="Hossz (perc)"
+                                    Binding="{Binding Length}"
+                                    Width="0.3*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Border>
 </Window>
